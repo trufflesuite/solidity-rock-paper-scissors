@@ -1,21 +1,27 @@
 pragma solidity ^0.6.0;
 
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+
 contract RockPaperScissors {
   struct Player {
     address payable playerAddress;
     uint8 move;
   }
 
+  IERC20 private _token;
   bool public player1Turn;
   Player public player1;
   Player public player2;
 
   constructor() public {
     player1Turn = true;
+    _token = IERC20(0x6B175474E89094C44Da98b954EedeAC495271d0F);
   }
 
-  function makeMove(uint8 move) public payable {
-    require(msg.value >= 1000000000000000000, "Did not pay at least 1 ETH");
+  function makeMove(uint8 move) public {
+    require(_token.balanceOf(msg.sender) >= 1000000000000000000, "Need at least 1 DAI to play");
+
+    _token.transferFrom(msg.sender, address(this), 1000000000000000000);
 
     if (player1Turn) {
       player1.playerAddress = msg.sender;
@@ -29,7 +35,7 @@ contract RockPaperScissors {
   }
 
   function pickWinner() private {
-    address payable winner = 0x0000000000000000000000000000000000000000;
+    address winner = 0x0000000000000000000000000000000000000000;
 
     if (
       (player1.move == 0 && player2.move == 2) ||
@@ -46,7 +52,7 @@ contract RockPaperScissors {
     }
 
     if (winner != 0x0000000000000000000000000000000000000000) {
-      winner.transfer(address(this).balance);
+      _token.transferFrom(address(this), winner, 1000000000000000000);
     }
   }
 }
