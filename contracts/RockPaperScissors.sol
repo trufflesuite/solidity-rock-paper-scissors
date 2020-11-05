@@ -18,10 +18,6 @@ contract RockPaperScissors {
     _token = IERC20(0x6B175474E89094C44Da98b954EedeAC495271d0F);
   }
 
-  function approve(uint8 makeMeZero) public {
-    _token.approve(address(this), 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff);
-  }
-
   function makeMove(uint8 move) public {
     require(_token.balanceOf(msg.sender) >= 1000000000000000000, "Need at least 1 DAI to play");
 
