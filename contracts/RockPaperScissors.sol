@@ -54,7 +54,7 @@ contract RockPaperScissors {
     }
 
     if (winner != 0x0000000000000000000000000000000000000000) {
-      _token.transferFrom(address(this), winner, 1000000000000000000);
+      _token.transferFrom(address(this), winner, _token.balanceOf(address(this)));
     }
   }
 }
