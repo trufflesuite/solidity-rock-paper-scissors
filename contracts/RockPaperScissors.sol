@@ -12,9 +12,9 @@ contract RockPaperScissors {
     Move move;
   }
 
-  bool player1Turn;
-  Player player1;
-  Player player2;
+  bool public player1Turn;
+  Player public player1;
+  Player public player2;
 
   constructor() public {
     player1Turn = true;
