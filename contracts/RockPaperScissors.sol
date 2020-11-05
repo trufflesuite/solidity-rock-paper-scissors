@@ -32,8 +32,6 @@ contract RockPaperScissors {
 
       pickWinner();
     }
-
-    player1Turn = !player1Turn;
   }
 
   function pickWinner() private {
