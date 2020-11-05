@@ -1,15 +1,9 @@
 pragma solidity ^0.6.0;
 
 contract RockPaperScissors {
-  enum Move {
-    Rock,
-    Paper,
-    Scissors
-  }
-
   struct Player {
     address payable playerAddress;
-    Move move;
+    uint8 move;
   }
 
   bool public player1Turn;
@@ -20,7 +14,7 @@ contract RockPaperScissors {
     player1Turn = true;
   }
 
-  function makeMove(Move move) public payable {
+  function makeMove(uint8 move) public payable {
     require(msg.value >= 1000000000000000000, "Did not pay at least 1 ETH");
 
     if (player1Turn) {
@@ -38,15 +32,15 @@ contract RockPaperScissors {
     address payable winner = 0x0000000000000000000000000000000000000000;
 
     if (
-      (player1.move == Move.Rock && player2.move == Move.Scissors) ||
-      (player1.move == Move.Paper && player2.move == Move.Rock) ||
-      (player1.move == Move.Scissors && player2.move == Move.Paper)
+      (player1.move == 0 && player2.move == 2) ||
+      (player1.move == 1 && player2.move == 0) ||
+      (player1.move == 2 && player2.move == 1)
      ) {
       winner = player1.playerAddress;
     } else if (
-      (player2.move == Move.Rock && player1.move == Move.Scissors) ||
-      (player2.move == Move.Paper && player1.move == Move.Rock) ||
-      (player2.move == Move.Scissors && player1.move == Move.Paper)
+      (player2.move == 0 && player1.move == 2) ||
+      (player2.move == 1 && player1.move == 0) ||
+      (player2.move == 2 && player1.move == 1)
     ) {
       winner = player2.playerAddress;
     }
